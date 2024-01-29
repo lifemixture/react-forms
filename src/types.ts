@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
-import {
-  INPUT_TEXT,
-  INPUT_PASSWORD,
-  INPUT_TOGGLE_SWITCH,
-} from './constants';
+// import { INPUT_TEXT, INPUT_PASSWORD, INPUT_TOGGLE_SWITCH } from './constants';
 
 export type InputValue = string | boolean | null;
 
@@ -76,4 +72,4 @@ type Input<T> = {
   autoFocus?: boolean;
 };
 
-type InputType = INPUT_TEXT | INPUT_PASSWORD | INPUT_TOGGLE_SWITCH;
+type InputType = 'text' | 'password' | 'toggleSwitch';
