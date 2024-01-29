@@ -15,11 +15,7 @@ import {
   INPUT_CHECKBOX,
 } from './constants';
 
-import {
-  type FormState,
-  type FormValues,
-  type FormInputProps,
-} from './types';
+import { type FormState, type FormValues, type FormInputProps } from './types';
 
 import initState from './initState';
 
@@ -31,22 +27,13 @@ export {
   InputText,
   InputPassword,
   InputToggleSwitch,
-}
+};
 
 // Constants
-export {
-  INPUT_TEXT,
-  INPUT_PASSWORD,
-  INPUT_TOGGLE_SWITCH,
-  INPUT_CHECKBOX,
-};
+export { INPUT_TEXT, INPUT_PASSWORD, INPUT_TOGGLE_SWITCH, INPUT_CHECKBOX };
 
 // Types
-export {
-  FormState,
-  FormValues,
-  FormInputProps,
-};
+export { FormState, FormValues, FormInputProps };
 
 // Utilities
 export { initState };
