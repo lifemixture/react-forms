@@ -8,24 +8,21 @@ const defaultProps = {
   title: '',
   id: '',
   value: false,
-  onChange: (v: boolean) => {},
-  onDirty: (v: boolean) => {},
+  onChange: () => {},
+  onDirty: () => {},
 };
 
 const InputToggleSwitch = (props: InputProps<boolean>) => {
-  const {
-    title,
-    id,
-    defaultValue,
-    onChange,
-    onDirty,
-  } = props;
+  const { title, id, defaultValue, onChange, onDirty } = props;
 
   const [isDirty, setDirty] = useState(false);
 
-  const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked)
-  }, [onChange]);
+  const onChangeHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.checked);
+    },
+    [onChange]
+  );
 
   const onDirtyHandler = useCallback(() => {
     if (isDirty) {
@@ -51,9 +48,7 @@ const InputToggleSwitch = (props: InputProps<boolean>) => {
         <span className="slider round"></span>
       </label>
 
-      <div className="toggle-switch-title">
-        {title}
-      </div>
+      <div className="toggle-switch-title">{title}</div>
     </div>
   );
 };

@@ -1,134 +1,100 @@
 import {
   useCallback,
-  Children,
-  useState,
   useMemo,
   FormEvent,
   isValidElement,
+  useReducer,
+  useEffect,
 } from 'react';
 
 import ErrorMsgs from './ErrorMsgs';
 
-import {
-  getInputs,
-  isFormDirty,
-  getDefaultValues,
-  initDirty,
-  getUpdatedState,
-  wrapHandler,
-  isFormInput,
-} from './utils';
+import { getInputs, isFormInput, wrapFormInputs } from './utils';
 
-import validate from './validate';
+import initState from './initState';
 
-import {
-  FormDirtyState,
-  FormInputProps,
-  FormProps,
-  FormValues,
-  InputValue,
-} from './types';
+import { FormDirtyState, FormInputProps, FormProps, InputValue } from './types';
 
 import './Form.scss';
+import reducer, {
+  markAsDirty,
+  updateDirtyState,
+  updateValues,
+} from './reducers/formStateReducer';
 
-const Form = (props: FormProps) => {
-  const { children, className, onSubmit, onStateChange } = props;
-
+const Form = ({
+  children = [],
+  className = '',
+  onSubmit = () => {},
+  onStateChange = () => {},
+}: FormProps) => {
   const inputs = useMemo(() => getInputs(children), [children]);
 
-  const [values, setValues] = useState(() => getDefaultValues(inputs));
-  const [inputsDirty, setDirty] = useState(() => initDirty(inputs, false));
+  const [{ values, inputsDirty, isValid, errors, isDirty }, dispatch] =
+    useReducer(reducer, initState(inputs));
 
-  const [isValid, errors] = useMemo(() => validate(inputs, values), [inputs, values]);
-  const isDirty = useMemo(() => isFormDirty(inputsDirty), [inputsDirty]);
+  useEffect(() => {
+    onStateChange({ values, inputsDirty, isValid, errors, isDirty });
+  }, [values, inputsDirty, isValid, errors, isDirty, onStateChange]);
 
-  const onValuesChangeHandler = useCallback((input: string, val: InputValue) => {
-    setValues((s: FormValues) => ({ ...s, [input]: val }));
+  const onValuesChangeHandler = useCallback(
+    (input: string, val: InputValue) => {
+      dispatch(updateValues(input, val, inputs));
+    },
+    [inputs]
+  );
 
-    const updatedValues = { ...values, [input]: val };
-    const [isValid, errors] = validate(inputs, updatedValues);
-    const state = getUpdatedState(updatedValues, errors, isValid, isDirty);
+  const onDirtyHandler = useCallback(
+    (input: string, isInputDirty: boolean) => {
+      dispatch(updateDirtyState(input, isInputDirty, inputs));
+    },
+    [inputs]
+  );
 
-    onStateChange(state);
-  }, [inputs, values, isDirty, onStateChange]);
+  const onSubmitHandler = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-  const onDirtyHandler = useCallback((input: string, isDirty: boolean) => {
-    setDirty((s: FormDirtyState) => ({ ...s, [input]: isDirty }));
+      if (!isValid) {
+        dispatch(markAsDirty(inputs));
 
-    const updatedInputsDirty = { ...inputsDirty, [input]: isDirty };
-    const updatedIsDirty = isFormDirty(updatedInputsDirty);
-    const state = getUpdatedState(values, errors, isValid, updatedIsDirty);
-
-    onStateChange(state);
-  }, [inputsDirty, values, errors, isValid, onStateChange]);
-
-  const childrenWrapped = useMemo(() => {
-    return Children.toArray(children).map((child) => {
-      if (!(isValidElement<FormInputProps>(child) && isFormInput(child))) {
-        return child;
+        return;
       }
 
-      const props = { ...child.props };
-
-      props.onChange = wrapHandler(props.id, onValuesChangeHandler, props.onChange);
-      props.onDirty = wrapHandler(props.id, onDirtyHandler, props.onDirty);
-
-      return { ...child, props };
-    });
-  }, [children, onDirtyHandler, onValuesChangeHandler]);
-
-  const markAsDirty = useCallback(() => {
-    setDirty(() => initDirty(inputs, true));
-  }, [inputs]);
-
-  const onSubmitHandler = useCallback((event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!isValid) {
-      markAsDirty();
-
-      return;
-    }
-
-    onSubmit(values);
-  }, [onSubmit, values, isValid, markAsDirty]);
+      onSubmit(values);
+    },
+    [onSubmit, values, isValid, inputs]
+  );
 
   return (
-    <form
-      className={`custom-form ${className}`}
-      onSubmit={onSubmitHandler}
-    >
-      {
-        childrenWrapped.map((child, index) => {
+    <form className={`custom-form ${className}`} onSubmit={onSubmitHandler}>
+      {wrapFormInputs(children, onValuesChangeHandler, onDirtyHandler).map(
+        (child) => {
           if (!(isValidElement<FormInputProps>(child) && isFormInput(child))) {
             return child;
           }
 
           return (
-            <div
-              className="form-input-outer"
-              key={index}
-            >
-              { child }
+            <div className="form-input-outer" key={child.props.id}>
+              {child}
 
-              {
-                child.props.validation && inputsDirty[child.props.id]
-                  ? <ErrorMsgs errors={errors[child.props.id]} />
-                  : null
-              }
+              {child.props.validation &&
+              (inputsDirty as FormDirtyState)[child.props.id] ? (
+                <ErrorMsgs errors={errors[child.props.id]} />
+              ) : null}
             </div>
-          )
-        })
-      }
+          );
+        }
+      )}
     </form>
   );
 };
 
-Form.defaultProps = {
-  children: [],
-  className: '',
-  onSubmit: () => {},
-  onStateChange: () => {},
-}
+// Form.defaultProps = {
+//   children: [],
+//   className: '',
+//   onSubmit: () => {},
+//   onStateChange: () => {},
+// };
 
 export default Form;

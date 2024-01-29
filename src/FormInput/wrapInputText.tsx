@@ -4,24 +4,23 @@ import { BaseInputProps, InputProps } from '../types';
 
 const wrapInputText = (
   Input: ComponentType<BaseInputProps<string>>,
-  defaultProps: InputProps<string>,
+  defaultProps: InputProps<string>
 ) => {
   const InputBase = (props: InputProps<string>) => {
-    const {
-      defaultValue,
-      onChange,
-      onDirty,
-    } = props;
+    const { defaultValue, onChange, onDirty } = props;
 
     const [value, setValue] = useState(defaultValue || '');
     const [isDirty, setDirty] = useState(false);
 
-    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target;
+    const onChangeHandler = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
 
-      setValue(value);
-      onChange(value);
-    }, [onChange]);
+        setValue(value);
+        onChange(value);
+      },
+      [onChange]
+    );
 
     const onDirtyHandler = useCallback(() => {
       if (isDirty) {
@@ -35,7 +34,7 @@ const wrapInputText = (
     return (
       <div className="form-input">
         <Input
-          { ...props }
+          {...props}
           value={value}
           isDirty={isDirty}
           onChange={onChangeHandler}

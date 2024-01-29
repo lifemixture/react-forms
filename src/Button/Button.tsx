@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import './Button.scss';
 
@@ -18,11 +18,7 @@ const Button = (props: ButtonProps) => {
 
   return (
     <div className="custom-button">
-      <button
-        type={type}
-        disabled={disabled}
-        onClick={onClickHandler}
-      >
+      <button type={type} disabled={disabled} onClick={onClickHandler}>
         {title}
       </button>
     </div>
@@ -34,6 +30,6 @@ Button.defaultProps = {
   type: 'button',
   disabled: false,
   onClick: () => {},
-}
+};
 
 export default Button;

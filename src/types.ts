@@ -25,6 +25,7 @@ export type FormState = {
   errors: FormErrors;
   isValid: boolean;
   isDirty: boolean;
+  inputsDirty: FormDirtyState;
 };
 
 export type FormProps = {

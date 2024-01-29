@@ -15,8 +15,8 @@ const defaultProps = {
   placeholder: '',
   autoComplete: 'off',
   autoFocus: false,
-  onChange: (v: string) => {},
-  onDirty: (v: boolean) => {},
+  onChange: () => {},
+  onDirty: () => {},
 };
 
 const InputText = wrapInputText((props: BaseInputProps<string>) => {
@@ -36,9 +36,7 @@ const InputText = wrapInputText((props: BaseInputProps<string>) => {
 
   return (
     <div className="input-text">
-      {
-        title ? <label htmlFor={id}>{title}</label> : null
-      }
+      {title ? <label htmlFor={id}>{title}</label> : null}
 
       <input
         id={id}
