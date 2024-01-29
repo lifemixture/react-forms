@@ -6,7 +6,6 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'react-forms',
-
       fileName: 'index',
     },
     rollupOptions: {
