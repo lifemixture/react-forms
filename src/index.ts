@@ -21,6 +21,7 @@ import initState from './components/Form/initState';
 
 // Components
 export {
+  Form,
   FormInput,
   ErrorMsgs,
   Button,
@@ -37,5 +38,3 @@ export { FormState, FormValues, FormInputProps };
 
 // Utilities
 export { initState };
-
-export default Form;
