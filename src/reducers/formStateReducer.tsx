@@ -1,6 +1,6 @@
 import { FormInputProps, FormState, InputValue } from '../types';
-import { initDirty, isFormDirty } from '../utils';
-import validate from '../validate';
+import { initDirty, isFormDirty } from '../components/Form/utils';
+import validate from '../components/Form/validate';
 
 type Action = {
   type: string;

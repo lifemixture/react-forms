@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-import { InputProps } from '../../types';
+import { InputProps } from '../../../../types';
 
 import './InputToggleSwitch.scss';
 

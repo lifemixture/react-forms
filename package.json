@@ -1,22 +1,26 @@
 {
   "name": "@lifemixture/react-forms",
   "version": "0.0.3",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist/**/*"
+    "dist"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && tsc"
+    "build": "vite build && tsc"
   },
   "author": "lifemixture",
   "license": "ISC",
   "description": "",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
-    "typescript": "^5.3.3"
+    "react": "^18.2.0",
+    "sass": "^1.70.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
   }
 }

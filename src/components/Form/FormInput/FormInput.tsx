@@ -1,10 +1,14 @@
-import { FormInputProps, InputProps } from '../types';
+import { FormInputProps, InputProps } from '../../../types';
 
 import InputText from './InputText';
 import InputPassword from './InputPassword';
 import InputToggleSwitch from './InputToggleSwitch';
 
-import { INPUT_TEXT, INPUT_PASSWORD, INPUT_TOGGLE_SWITCH } from '../constants';
+import {
+  INPUT_TEXT,
+  INPUT_PASSWORD,
+  INPUT_TOGGLE_SWITCH,
+} from '../../../constants';
 
 import './FormInput.scss';
 

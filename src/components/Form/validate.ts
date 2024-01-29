@@ -5,21 +5,19 @@ import {
   FormValidity,
   FormValues,
   InputValue,
-} from './types';
+} from '../../types';
 
 const _getInputErrors = (
   validation: FormInputValidation | undefined,
   val: InputValue,
-  formValues: FormValues,
+  formValues: FormValues
 ) => {
   if (!validation) {
     return [];
   }
 
   if (!val) {
-    return validation.required
-      ? ['Field is required']
-      : [];
+    return validation.required ? ['Field is required'] : [];
   }
 
   if (!(validation.rules && validation.rules.length)) {
@@ -38,7 +36,7 @@ const _getInputErrors = (
 const _validateInput = (
   validation: FormInputValidation | undefined,
   val: InputValue,
-  formValues: FormValues,
+  formValues: FormValues
 ): [boolean, string[]] => {
   const errors = _getInputErrors(validation, val, formValues);
   const isValid = !errors.length;
@@ -47,25 +45,31 @@ const _validateInput = (
 };
 
 const _isFormValid = (validity: { [key: string]: boolean }) => {
-  return !Object.values(validity).some(isValid => !isValid);
+  return !Object.values(validity).some((isValid) => !isValid);
 };
 
 const validate = (
   inputs: FormInputProps[],
-  values: FormValues,
+  values: FormValues
 ): [boolean, FormErrors] => {
-  const { validity, errors } = inputs
-    .reduce((acc, input) => {
-      const [isValid, errors] = _validateInput(input.validation, values[input.id], values);
+  const { validity, errors } = inputs.reduce(
+    (acc, input) => {
+      const [isValid, errors] = _validateInput(
+        input.validation,
+        values[input.id],
+        values
+      );
 
       acc.errors[input.id] = errors;
       acc.validity[input.id] = isValid;
 
       return acc;
-    }, {
+    },
+    {
       validity: {} as FormValidity,
       errors: {} as FormErrors,
-    });
+    }
+  );
 
   const isValid = _isFormValid(validity);
 

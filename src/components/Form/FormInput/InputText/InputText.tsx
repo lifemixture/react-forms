@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import wrapInputText from '../wrapInputText';
-import { INPUT_TEXT } from '../../constants';
-import { BaseInputProps } from '../../types';
+import { INPUT_TEXT } from '../../../../constants';
+import { BaseInputProps } from '../../../../types';
 
 import './InputText.scss';
 

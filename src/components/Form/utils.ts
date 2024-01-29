@@ -7,7 +7,7 @@ import {
   FormInputProps,
   FormValues,
   InputValue,
-} from './types';
+} from '../../types';
 
 export const isFormInput = (el: ReactElement<FormInputProps>) =>
   el.type === FormInput;

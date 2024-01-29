@@ -13,14 +13,19 @@ import { getInputs, isFormInput, wrapFormInputs } from './utils';
 
 import initState from './initState';
 
-import { FormDirtyState, FormInputProps, FormProps, InputValue } from './types';
+import {
+  FormDirtyState,
+  FormInputProps,
+  FormProps,
+  InputValue,
+} from '../../types';
 
 import './Form.scss';
 import reducer, {
   markAsDirty,
   updateDirtyState,
   updateValues,
-} from './reducers/formStateReducer';
+} from '../../reducers/formStateReducer';
 
 const Form = ({
   children = [],

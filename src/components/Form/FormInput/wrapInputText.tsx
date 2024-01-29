@@ -1,6 +1,6 @@
 import { ChangeEvent, ComponentType, useCallback, useState } from 'react';
 
-import { BaseInputProps, InputProps } from '../types';
+import { BaseInputProps, InputProps } from '../../../types';
 
 const wrapInputText = (
   Input: ComponentType<BaseInputProps<string>>,

@@ -1,12 +1,12 @@
-import Form from './Form';
+import Form from './components/Form';
 
-import FormInput from './FormInput';
+import FormInput from './components/Form/FormInput';
+import ErrorMsgs from './components/Form/ErrorMsgs';
+import Button from './components/Form/Button';
 
-import ErrorMsgs from './ErrorMsgs';
-import Button from './Button';
-import InputText from './FormInput/InputText';
-import InputPassword from './FormInput/InputPassword';
-import InputToggleSwitch from './FormInput/InputToggleSwitch';
+import InputText from './components/Form/FormInput/InputText';
+import InputPassword from './components/Form/FormInput/InputPassword';
+import InputToggleSwitch from './components/Form/FormInput/InputToggleSwitch';
 
 import {
   INPUT_TEXT,
@@ -15,13 +15,9 @@ import {
   INPUT_CHECKBOX,
 } from './constants';
 
-import {
-  type FormState,
-  type FormValues,
-  type FormInputProps,
-} from './types';
+import { type FormState, type FormValues, type FormInputProps } from './types';
 
-import initState from './initState';
+import initState from './components/Form/initState';
 
 // Components
 export {
@@ -31,22 +27,13 @@ export {
   InputText,
   InputPassword,
   InputToggleSwitch,
-}
+};
 
 // Constants
-export {
-  INPUT_TEXT,
-  INPUT_PASSWORD,
-  INPUT_TOGGLE_SWITCH,
-  INPUT_CHECKBOX,
-};
+export { INPUT_TEXT, INPUT_PASSWORD, INPUT_TOGGLE_SWITCH, INPUT_CHECKBOX };
 
 // Types
-export {
-  FormState,
-  FormValues,
-  FormInputProps,
-};
+export { FormState, FormValues, FormInputProps };
 
 // Utilities
 export { initState };
